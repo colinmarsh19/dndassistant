@@ -8,7 +8,9 @@ import json
 import os
 
 client = discord.Client()
+
 sad_words = ['sad', 'depressed', 'unhappy', 'angry', 'miserable', 'depressing']
+
 starter_encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person!']
 
 if 'responding' not in db.keys():
@@ -117,11 +119,8 @@ async def on_message(message):
       rolls = []
       total = 0
       for die in dice:
-        result = roll_multiple_dice(die)
-        total += result
-        rolls.append(result)
-      response = f'You rolled: {total} {rolls}' if len(rolls) > 1 else f'You rolled: {total}'
-      await message.channel.send(response)
+        rolls.append(roll_multiple_dice(die))
+      await message.channel.send(f'You rolled: {rolls}')
 
   except Exception as e:
     print(e)
