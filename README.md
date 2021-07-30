@@ -12,7 +12,7 @@ Available commands:
 
 * `$list` will show all the current encouraging quotes that can be sent
 
-* `$del #` will delete the specified index of an encouraging quote. Use `$list` to determine what quotes are at what index
+* `$del #` will delete the specified index of an encouraging quote
 
 * `$responding True` will enable the bot to send encouraging messages when users send texts containing sad words
 
