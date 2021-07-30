@@ -14,6 +14,6 @@ Available commands:
 
 * `$del #` will delete the specified index of an encouraging quote. Use `$list` to determine what quotes are at what index
 
-* `$responding True` will enable the bot to send encouraging messages when users type in messages containing sad words
+* `$responding True` will enable the bot to send encouraging messages when users send texts containing sad words
 
 * `$responding False` will disable the bot from sending encouraging messages
