@@ -1,6 +1,6 @@
 # DnD Assistant
 
-Pet project to write a bot capable of performing several useful utilities for online D&D games run via Discord.
+Pet project to write a bot capable of performing several useful functions for online D&D games run via Discord.
 
 Available commands:
 
