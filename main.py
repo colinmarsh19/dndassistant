@@ -1,4 +1,5 @@
 from app import keep_alive
+from random import randint
 from replit import db
 import requests
 import random
@@ -14,6 +15,15 @@ starter_encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person
 
 if 'responding' not in db.keys():
   db['responding'] = True
+
+def roll_dice(max_value):
+  try:
+    if int(max_value) > 0:
+      return randint(1, int(max_value))
+    else:
+      return 'Invalid number'
+  except:
+    return 'Not a number'
 
 def get_quote():
   response = requests.get('https://zenquotes.io/api/random')
@@ -87,6 +97,11 @@ async def on_message(message):
     else:
       db['responding'] = False
       await message.channel.send('Responding is off.')
+
+  if msg.startswith('$roll'):
+    value = msg.split('$roll ', 1)[1]
+    if value.startswith('d'):
+      await message.channel.send(roll_dice(value[1:]))
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
