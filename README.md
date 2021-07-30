@@ -1,10 +1,10 @@
-# dndassistant
+# DnD Assistant
 
 Pet project to write a bot capable of performing several useful utilities for online D&D games run via Discord.
 
 Available commands:
 
-* `$roll d#` will roll the specified dice number (#). Even if the die doesn't exist, as long as the number is greater than 0, it will choose a random number between 1 and that number
+* `$roll` will allow you to roll one or multiple dice. It can be used with or without a preceding multiplier, such as `d6` or `2d6`. You can also add or subtract a multiplier from each roll, such as `2d6+4` or `2d6-1`. You can also do space-separated dice rolls, such as `2d6+4 3d4+2`.
 
 * `$inspire` will send a random inspirational quote from the ZenQuotes API
 
