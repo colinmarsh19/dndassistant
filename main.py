@@ -42,24 +42,24 @@ def roll_die(max_value):
     return 
 
 def get_xp(character):
-  xp = db['xp'].get(character)
+  xp = db['xp'].get(character.lower())
   if xp is not None:
     return f'{character} has {xp} experience points'
   return f'No experience found for {character}'
 
 def update_xp(character, xp):
   if character and xp is not None and db['xp'].get(character):
-    db['xp'][character] += int(xp)
+    db['xp'][character.lower()] += int(xp)
     return f'Added {xp} experience points for {character}'
   elif character and xp is not None:
-    db['xp'][character] = int(xp)
+    db['xp'][character.lower()] = int(xp)
     return f'Added {xp} experience points for {character}'
   return f'No experience added for {character}'
 
 def delete_xp(character):
-  xp = db['xp'].get(character)
+  xp = db['xp'].get(character.lower())
   if xp is not None:
-    del db['xp'][character]
+    del db['xp'][character.lower()]
     return f'Deleted experience points for {character}'
   return f'No experience found for {character}'
 
