@@ -15,6 +15,8 @@ starter_encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person
 
 if 'responding' not in db.keys():
   db['responding'] = True
+if 'xp' not in db.keys():
+  db['xp'] = {}
 
 def roll_multiple_dice(dice):
   times, num_mod = dice.split('d')
@@ -37,7 +39,29 @@ def roll_die(max_value):
   if max_value > 0:
     return randint(1, max_value)
   else:
-    return 0
+    return 
+
+def get_xp(character):
+  xp = db['xp'].get(character)
+  if xp is not None:
+    return f'{character} has {xp} experience points'
+  return f'No experience found for {character}'
+
+def update_xp(character, xp):
+  if character and xp is not None and db['xp'].get(character):
+    db['xp'][character] += int(xp)
+    return f'Added {xp} experience points for {character}'
+  elif character and xp is not None:
+    db['xp'][character] = int(xp)
+    return f'Added {xp} experience points for {character}'
+  return f'No experience added for {character}'
+
+def delete_xp(character):
+  xp = db['xp'].get(character)
+  if xp is not None:
+    del db['xp'][character]
+    return f'Deleted experience points for {character}'
+  return f'No experience found for {character}'
 
 def get_quote():
   response = requests.get('https://zenquotes.io/api/random')
@@ -121,6 +145,19 @@ async def on_message(message):
       for die in dice:
         rolls.append(roll_multiple_dice(die))
       await message.channel.send(f'You rolled: {rolls}')
+
+    if msg.startswith('$addxp'):
+      value = msg.split('$addxp ', 1)[1]
+      character, xp = value.split()
+      await message.channel.send(update_xp(character, xp))
+
+    if msg.startswith('$showxp'):
+      character = msg.split('$showxp ', 1)[1]
+      await message.channel.send(get_xp(character))
+
+    if msg.startswith('$removexp'):
+      character = msg.split('$removexp ', 1)[1]
+      await message.channel.send(delete_xp(character))
 
   except Exception as e:
     print(e)

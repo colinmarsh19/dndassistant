@@ -6,6 +6,12 @@ Available commands:
 
 * `$roll` will allow you to roll one or multiple dice. It can be used with or without a preceding multiplier, such as `d6` or `2d6`. You can also add or subtract a multiplier from each roll, such as `2d6+4` or `2d6-1`. You can also do space-separated dice rolls, such as `2d6+4 3d4+2`.
 
+* `$addxp <character> <xp>` will either insert a new record into the database to keep track of a character's XP, or update their current XP by the specified amount
+
+* `$showxp <character>` will show the character's current XP total
+
+* `removexp <character>` will remove the character's XP from the database
+
 * `$inspire` will send a random inspirational quote from the ZenQuotes API
 
 * `$new` will allow you to add an encouraging quote to the existing list
