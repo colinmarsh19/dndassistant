@@ -10,7 +10,7 @@ Available commands:
 
 * `$showxp <character>` will show the character's current XP total
 
-* `removexp <character>` will remove the character's XP from the database
+* `$removexp <character>` will remove the character's XP from the database
 
 * `$inspire` will send a random inspirational quote from the ZenQuotes API
 
