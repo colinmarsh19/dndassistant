@@ -51,7 +51,7 @@ def roll_die(max_value):
   if max_value > 0:
     return randint(1, max_value)
   else:
-    return 
+    return 0
 
 def get_xp(character):
   xp = db['xp'].get(character.lower())
@@ -170,6 +170,10 @@ async def on_message(message):
     if msg.startswith('$removexp'):
       character = msg.split('$removexp ', 1)[1]
       await message.channel.send(delete_xp(character))
+
+    if msg.startswith('$initstats'):
+      character = msg.split('$initstats ', 1)[1]
+      await message.channel.send(initialize_stats(character))
       
   except Exception as e:
     print(e)
