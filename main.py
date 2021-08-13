@@ -10,13 +10,25 @@ import os
 client = discord.Client()
 
 sad_words = ['sad', 'depressed', 'unhappy', 'angry', 'miserable', 'depressing']
-
-starter_encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person!']
+encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person!']
+base_stats = {'str': 10, 'con': 10, 'dex': 10, 'int': 10, 'wis': 10, 'cha': 10}
+combat_stats = {'armor_class': 10, 'initiative': 0, 'speed': 30}
 
 if 'responding' not in db.keys():
   db['responding'] = True
 if 'xp' not in db.keys():
   db['xp'] = {}
+if 'stats' not in db.keys():
+  db['stats'] = {}
+if 'combat_stats' not in db.keys():
+  db['combat_stats'] = {}
+
+def initialize_stats(character):
+  if character:
+    db['stats'][character] = base_stats
+    db['combat_stats'][character] = combat_stats
+    return f'Stats initialized for {character}'
+  return 'Stats not initialized'
 
 def roll_multiple_dice(dice):
   times, num_mod = dice.split('d')
@@ -100,7 +112,7 @@ async def on_message(message):
     await message.channel.send(quote)
 
   if db['responding']:
-    options = starter_encouragements
+    options = encouragements
     if 'encouragements' in db.keys():
       options += db['encouragements']
 
@@ -158,9 +170,10 @@ async def on_message(message):
     if msg.startswith('$removexp'):
       character = msg.split('$removexp ', 1)[1]
       await message.channel.send(delete_xp(character))
-
+      
   except Exception as e:
     print(e)
 
-keep_alive()
-client.run(os.getenv('TOKEN'))
+if __name__ == "__main__":
+  keep_alive()
+  client.run(os.getenv('TOKEN'))
