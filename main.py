@@ -8,7 +8,6 @@ import json
 import os
 
 client = discord.Client()
-
 sad_words = ['sad', 'depressed', 'unhappy', 'angry', 'miserable', 'depressing']
 encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person!']
 base_stats = {'str': 10, 'con': 10, 'dex': 10, 'int': 10, 'wis': 10, 'cha': 10}
@@ -29,6 +28,16 @@ def initialize_stats(character):
     db['combat_stats'][character] = combat_stats
     return f'Stats initialized for {character}'
   return 'Stats not initialized'
+
+def get_stats(character):
+  if db['stats'].get(character):
+    return dict(db['stats'][character])
+  return f'No stats for {character}'
+
+def get_combat_stats(character):
+  if db['combat_stats'].get(character):
+    return dict(db['combat_stats'][character])
+  return f'No combat stats for {character}'
 
 def roll_multiple_dice(dice):
   times, num_mod = dice.split('d')
@@ -174,7 +183,14 @@ async def on_message(message):
     if msg.startswith('$initstats'):
       character = msg.split('$initstats ', 1)[1]
       await message.channel.send(initialize_stats(character))
-      
+
+    if msg.startswith('$stats'):
+      character = msg.split('$stats ', 1)[1]
+      await message.channel.send(get_stats(character))
+
+    if msg.startswith('$combat'):
+      character = msg.split('$combat ', 1)[1]
+      await message.channel.send(get_combat_stats(character))
   except Exception as e:
     print(e)
 
