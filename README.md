@@ -14,11 +14,11 @@ Available commands:
 
 * `$inspire` will send a random inspirational quote from the ZenQuotes API
 
-* `$new` will allow you to add an encouraging quote to the existing list
+* `$new_quote` will allow you to add an encouraging quote to the existing list
 
-* `$list` will show all the current encouraging quotes that can be sent
+* `$list_quotes` will show all the current encouraging quotes that can be sent
 
-* `$del #` will delete the specified index of an encouraging quote
+* `$delete_quote #` will delete the specified index of an encouraging quote
 
 * `$responding True` will enable the bot to send encouraging messages when users send texts containing sad words
 

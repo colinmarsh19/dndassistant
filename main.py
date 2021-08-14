@@ -22,23 +22,6 @@ if 'stats' not in db.keys():
 if 'combat_stats' not in db.keys():
   db['combat_stats'] = {}
 
-def initialize_stats(character):
-  if character:
-    db['stats'][character] = base_stats
-    db['combat_stats'][character] = combat_stats
-    return f'Stats initialized for {character}'
-  return 'Stats not initialized'
-
-def get_stats(character):
-  if db['stats'].get(character):
-    return dict(db['stats'][character])
-  return f'No stats for {character}'
-
-def get_combat_stats(character):
-  if db['combat_stats'].get(character):
-    return dict(db['combat_stats'][character])
-  return f'No combat stats for {character}'
-
 def roll_multiple_dice(dice):
   times, num_mod = dice.split('d')
   if '+' in num_mod:
@@ -61,6 +44,39 @@ def roll_die(max_value):
     return randint(1, max_value)
   else:
     return 0
+
+def initialize_stats(character):
+  if character:
+    db['stats'][character.lower()] = base_stats
+    db['combat_stats'][character.lower()] = combat_stats
+    return f'Stats initialized for {character}'
+  return 'Stats not initialized'
+
+def get_stats(character):
+  if db['stats'].get(character.lower()):
+    return dict(db['stats'][character.lower()])
+  return f'No stats for {character}'
+
+def get_combat_stats(character):
+  if db['combat_stats'].get(character.lower()):
+    return dict(db['combat_stats'][character.lower()])
+  return f'No combat stats for {character}'
+
+def update_stats(character, attribute, score):
+  if attribute in db['stats'].get(character):
+    db['stats'][character.lower()][attribute.lower()] = int(score)
+    return f'{attribute.upper()} has been updated to {score} for {character}'
+  elif attribute in db['combat_stats'].get(character):
+    db['combat_stats'][character.lower()][attribute.lower()] = int(score)
+    return f'{attribute.upper()} has been updated to {score} for {character}'
+  return f'No stats updated for {character}'
+
+def delete_stats(character):
+  if db['stats'].get(character.lower()):
+    del db['stats'][character.lower()]
+  if db['combat_stats'].get(character.lower()):
+    del db['combat_stats'][character.lower()]
+  return f'Stats deleted for {character}'
 
 def get_xp(character):
   xp = db['xp'].get(character.lower())
@@ -129,20 +145,20 @@ async def on_message(message):
       await message.channel.send(random.choice(options))
 
   try:
-    if msg.startswith('$new'):
-      encouraging_message = msg.split('$new ', 1)[1]
+    if msg.startswith('$new_quote'):
+      encouraging_message = msg.split('$new_quote ', 1)[1]
       update_encouragements(encouraging_message)
       await message.channel.send('New message added.')
 
-    if msg.startswith('$del'):
+    if msg.startswith('$delete_quote'):
       encouragements = []
       if 'encouragements' in db.keys():
-        index = int(msg.split('$del ', 1)[1])
+        index = int(msg.split('$delete_quote ', 1)[1])
         delete_encouragement(index)
         encouragements = db['encouragements']
       await message.channel.send(list(encouragements))
 
-    if msg.startswith('$list'):
+    if msg.startswith('$list_quotes'):
       encouragements = []
       if 'encouragements' in db.keys():
         encouragements = db['encouragements']
@@ -162,7 +178,6 @@ async def on_message(message):
       value = msg.split('$roll ', 1)[1]
       dice = value.split()
       rolls = []
-      total = 0
       for die in dice:
         rolls.append(roll_multiple_dice(die))
       await message.channel.send(f'You rolled: {rolls}')
@@ -191,6 +206,16 @@ async def on_message(message):
     if msg.startswith('$combat'):
       character = msg.split('$combat ', 1)[1]
       await message.channel.send(get_combat_stats(character))
+
+    if msg.startswith('$updatestats'):
+      value = msg.split('$updatestats ', 1)[1]
+      character, attribute, score = value.split()
+      await message.channel.send(update_stats(character, attribute, score))
+
+    if msg.startswith('$deletestats'):
+      character = msg.split('$deletestats ', 1)[1]
+      await message.channel.send(delete_stats(character))
+  
   except Exception as e:
     print(e)
 
