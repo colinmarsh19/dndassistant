@@ -11,7 +11,7 @@ client = discord.Client()
 sad_words = ['sad', 'depressed', 'unhappy', 'angry', 'miserable', 'depressing']
 encouragements = ['Cheer up!', 'Hang in there.', 'You are a great person!']
 base_stats = {'str': 10, 'con': 10, 'dex': 10, 'int': 10, 'wis': 10, 'cha': 10}
-combat_stats = {'armor_class': 10, 'initiative': 0, 'speed': 30}
+combat_stats = {'armor_class': 10, 'initiative': 0, 'speed': 30, 'hit_points': 0}
 
 if 'responding' not in db.keys():
   db['responding'] = True
