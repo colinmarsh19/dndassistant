@@ -12,15 +12,15 @@ Available commands:
 
 * `$removexp <character>` will remove the character's XP from the database
 
-* `$initstats <character>` initializes base stats for given character
+* `$initstats <character>` initializes base stats for a given character
 
 * `$stats <character>` will show the base stats for a given character
 
 * `$combat <character>` will show the combat stats for a given character
 
-* `$updatestats <character> <attribute> <score>` will update that specific attribute score for the given chracter
+* `$updatestats <character> <attribute> <score>` will update that specific attribute score for a given chracter
 
-* `$deletestats <character>` will delete all stats for the given character
+* `$deletestats <character>` will delete all stats for a given character
 
 * `$inspire` will send a random inspirational quote from the ZenQuotes API
 
